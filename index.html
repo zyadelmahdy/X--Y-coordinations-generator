@@ -1,59 +1,60 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Mouse Coordinates Tracker (Scaled)</title>
     <style>
-        body {
-            margin: 0;
-            height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-family: Arial, sans-serif;
-            background-color: #f0f0f0;
-        }
-        .coordinate-box {
-            padding: 20px;
-            background-color: #fff;
-            border: 2px solid #000;
-            font-size: 20px;
-        }
+      body {
+        margin: 0;
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-family: Arial, sans-serif;
+        background-color: #f0f0f0;
+      }
+      .coordinate-box {
+        padding: 20px;
+        background-color: #fff;
+        border: 2px solid #000;
+        font-size: 20px;
+      }
     </style>
-</head>
-<body>
-
+  </head>
+  <body>
     <div class="coordinate-box">
-        Scaled X: <span id="x-coord">0</span>, Scaled Y: <span id="y-coord">0</span>
+      Scaled X: <span id="x-coord">0</span>, Scaled Y:
+      <span id="y-coord">0</span>
     </div>
 
     <script>
-        let scaledX = 0;
-        let scaledY = 0;
+      let scaledX = 0;
+      let scaledY = 0;
 
-        document.addEventListener('mousemove', function(event) {
-            var x = event.clientX;
-            var y = event.clientY;
+      document.addEventListener("mousemove", function (event) {
+        var x = event.clientX;
+        var y = event.clientY;
 
-            scaledX = ((x / window.innerWidth) * 2) - 1;
+        scaledX = (x / window.innerWidth) * 2 - 1;
+        scaledY = -((y / window.innerHeight) * 2 - 1);
 
-            scaledY = ((window.innerHeight - y) / window.innerHeight) * 1.5;
+        document.getElementById("x-coord").textContent = scaledX.toFixed(2);
+        document.getElementById("y-coord").textContent = scaledY.toFixed(2);
+      });
 
-            document.getElementById('x-coord').textContent = scaledX.toFixed(2);
-            document.getElementById('y-coord').textContent = scaledY.toFixed(2);
-        });
+      document.addEventListener("click", function () {
+        var coordinates = `X: ${scaledX.toFixed(2)}, Y: ${scaledY.toFixed(2)}`;
 
-        document.addEventListener('click', function() {
-            var coordinates = `X: ${scaledX.toFixed(2)}, Y: ${scaledY.toFixed(2)}`;
-            
-            navigator.clipboard.writeText(coordinates).then(function() {
-                alert('Coordinates copied: ' + coordinates);
-            }).catch(function(err) {
-                console.error('Could not copy text: ', err);
-            });
-        });
+        navigator.clipboard
+          .writeText(coordinates)
+          .then(function () {
+            alert("Coordinates copied: " + coordinates);
+          })
+          .catch(function (err) {
+            console.error("Could not copy text: ", err);
+          });
+      });
     </script>
-
-</body>
+  </body>
 </html>
